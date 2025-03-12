@@ -16,7 +16,7 @@ export const createNewEmployee = async (payload: Employee): Promise<EmployeeResp
 }
 
 export const updateEmployee = async (user_id: string, payload: Employee): Promise<EmployeeResponse> => {
-  const res = await axios.post(`${EMPLOYEE_API_PATH}/${user_id}`, payload);
+  const res = await axios.patch(`${EMPLOYEE_API_PATH}/${user_id}`, payload);
   return res;
 }
 

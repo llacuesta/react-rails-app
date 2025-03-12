@@ -1,7 +1,7 @@
 import EmployeeDetails from "./components/EmployeeDetails";
-import { useCreateEmployee, useDeleteEmployee, useEmployees } from "./hooks/useEmployee";
+import { useCreateEmployee, useDeleteEmployee, useEmployees, useUpdateEmployee } from "./hooks/useEmployee";
 import { Employee } from "./types/Employee";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 export default function EmployeeIndex() {
   // api call
@@ -27,16 +27,32 @@ export default function EmployeeIndex() {
 
   // handle edit
   const [editing, setEditing] = useState(new Array(employees?.data.length).fill( false ));
-  const handleEdit = (id: number) => {
+  const toggleEdit = (id: number) => {
     const newEditing = [...editing];
     newEditing[id - 1] = !editing[id - 1];
     setEditing(newEditing);
   };
 
+  // save edits
+  const [newFname, setNewFname] = useState("");
+  const [newLname, setNewLname] = useState("");
+  const updateMutation = useUpdateEmployee();
+  const saveEdits = (id: number, company_id: number) => {
+    const newEmployee: Employee = {
+      first_name: newFname,
+      last_name: newLname,
+      company_id
+    }
+
+    console.log(newEmployee)
+
+    updateMutation.mutate({ user_id: String(id), data: newEmployee })
+  }
+
   // handle delete
   const deleteMutation = useDeleteEmployee();
-  const handleDelete = (id: string) => {
-    deleteMutation.mutate(id)
+  const handleDelete = (id: number) => {
+    deleteMutation.mutate(String(id))
   };
 
   return (
@@ -48,7 +64,7 @@ export default function EmployeeIndex() {
     </div> : <div>
       {
         employees?.data.map((employee: Employee) => 
-          <EmployeeDetails key={employee.id} id={Number(employee.id!)} firstName={employee.first_name} lastName={employee.last_name} companyId={employee.company_id} toggle={editing[Number(employee.id)! - 1]} toggleEdit={handleEdit}/>
+          <EmployeeDetails key={employee.id} id={Number(employee.id!)} firstName={employee.first_name} lastName={employee.last_name} setNewFname={setNewFname} setNewLname={setNewLname} companyId={employee.company_id} toggle={editing[Number(employee.id)! - 1]} toggleEdit={toggleEdit} handleDelete={handleDelete} handleEdit={saveEdits}/>
         )
       }
       
