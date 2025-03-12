@@ -36,6 +36,7 @@ Project.create([
 ])
 p "Created 2 projects"
 
+# remove this later once frontend is supported
 Employee.destroy_all
 (10).times do |i|
   Employee.create(

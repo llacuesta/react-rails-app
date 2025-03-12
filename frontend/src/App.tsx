@@ -1,11 +1,15 @@
+import { Outlet } from 'react-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css'
 
-function App() {
+const queryClient = new QueryClient();
 
+function App() {
+  // main layout
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <QueryClientProvider client={queryClient}>
+      <Outlet />
+    </QueryClientProvider>
   )
 }
 
