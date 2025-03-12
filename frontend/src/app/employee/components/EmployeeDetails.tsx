@@ -51,7 +51,11 @@ export default function EmployeeDetails({
 
       { 
         !toggle ? 
-        <button onClick={() => toggleEdit(id)}>Edit</button> : 
+        <button onClick={() => {
+          toggleEdit(id);
+          setNewFname(firstName);
+          setNewLname(lastName);
+        }}>Edit</button> : 
         <button onClick={() => {
           toggleEdit(id);
           handleEdit(id, companyId);
