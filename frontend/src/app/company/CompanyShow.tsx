@@ -2,20 +2,30 @@ import { Link, useParams, useNavigate } from "react-router";
 import { useCompany, useDeleteCompany, useUpdateCompany } from "./hooks/useCompany";
 import { useEffect, useState } from "react";
 import { Company } from "./types/Company";
+import { Employee } from "../employee/types/Employee";
+import { useEmployees } from "../employee/hooks/useEmployee";
 
 export default function CompanyShow() {
     // api calls
     const param = useParams() as { company_id: string }
     const { data: company, error, isLoading } = useCompany(param.company_id);
+    const { data: employees, error: empError, empIsLoading } = useEmployees();
 
     // states
     const [toggleEdit, setToggleEdit] = useState(false);
     const [newCompanyName, setNewCompanyName] = useState("");
+    const [companyEmployees, setCompanyEmployees] = useState(Array<Employee>);
     useEffect(() => {
       if (company) {
         setNewCompanyName(company.data.company_name);
       }
     }, [company]);
+    useEffect(() => {
+      if (employees) {
+        const filteredEmployees = employees.data.filter(employee => employee.company_id === parseInt(param.company_id));
+        setCompanyEmployees(filteredEmployees);
+      }
+    }, [employees, param.company_id]);
 
     // save edit
     const updateMutation = useUpdateCompany();
@@ -79,7 +89,9 @@ export default function CompanyShow() {
               </Link>
             </div>
             {
-              
+              companyEmployees.map(employee => 
+                <p>{employee.first_name} {employee.last_name}</p>
+              )
             }
           </div>
 
