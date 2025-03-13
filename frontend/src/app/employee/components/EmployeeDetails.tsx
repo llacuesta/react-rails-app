@@ -55,17 +55,17 @@ export default function EmployeeDetails({
       <div className="flex gap-4 w-[150px]">
         { 
           !toggle ? 
-          <button onClick={() => {
+          <button className="hover:underline" onClick={() => {
             toggleEdit(id);
             setNewFname(firstName);
             setNewLname(lastName);
           }}>Edit</button> : 
-          <button onClick={() => {
+          <button className="hover:underline" onClick={() => {
             toggleEdit(id);
             handleEdit(id, companyId);
           }}>Save</button> 
         }
-        { !toggle ? <button onClick={() => handleDelete(id)}>Delete</button> : <></> }        
+        { !toggle ? <button className="hover:underline" onClick={() => handleDelete(id)}>Delete</button> : <></> }        
       </div>
 
     </div>

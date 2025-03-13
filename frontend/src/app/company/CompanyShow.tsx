@@ -9,7 +9,7 @@ export default function CompanyShow() {
     // api calls
     const param = useParams() as { company_id: string }
     const { data: company, error, isLoading } = useCompany(param.company_id);
-    const { data: employees, error: empError, empIsLoading } = useEmployees();
+    const { data: employees, error: empError, isLoading: empIsLoading } = useEmployees();
 
     // states
     const [toggleEdit, setToggleEdit] = useState(false);
@@ -81,18 +81,28 @@ export default function CompanyShow() {
 
         <div className="flex w-full gap-8">
           {/* list of employees */}
-          <div className="flex flex-col w-1/2 items-start">
+          <div className="flex flex-col w-1/2 gap-4 items-start">
             <div className="flex gap-4 items-end">
               <p className="text-3xl font-bold">Employees</p>
               <Link to="/employees">
                 <button className="hover:underline">View all employees</button>
               </Link>
+            </div >
+            
+            <div className="flex flex-col w-full items-start">
+              {
+                empIsLoading ? <p className="text-lg">Fetching employee information...</p> :
+                empError ? <div>
+                  <p className="text-lg text-red-500">An error has occured</p>
+                  <p>{empError.message}</p>
+                </div> :
+                companyEmployees.map(employee => (
+                  <div className="inline-flex gap-2 p-2 px-4 border-b border-sky-400 w-full">
+                    <p className="w-[30px]">{employee.id}</p> <p>{employee.first_name}</p> <p>{employee.last_name}</p>
+                  </div>
+                ))
+              }              
             </div>
-            {
-              companyEmployees.map(employee => 
-                <p>{employee.first_name} {employee.last_name}</p>
-              )
-            }
           </div>
 
           {/* list of projects */}
