@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchCompanies, fetchCompany } from "../api/companies";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createNewCompany, fetchCompanies, fetchCompany, updateCompany } from "../api/companies";
+import { Company } from "../types/Company";
 
 export const useCompanies = () => {
   return useQuery({
@@ -13,4 +14,26 @@ export const useCompany = (company_id: string) => {
     queryKey: ["companyData", company_id],
     queryFn: () => fetchCompany(company_id)
   });
+}
+
+export const useCreateCompany = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (payload: Company) => createNewCompany(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["companiesData"] })
+    }
+  })
+}
+
+export const useUpdateCompany = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (payload: { id: string, data: Company }) => updateCompany(payload.id, payload.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["companiesData"] })
+    }
+  })
 }
