@@ -18,6 +18,5 @@ export default function CompanyCard({
         <p className="w-full">{companyName}</p>
       </div>
     </Link>
-
   )
 }
