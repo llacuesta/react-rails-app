@@ -24,3 +24,8 @@ export const updateProject = async (id: string, payload: Project): Promise<Proje
   const res = await axios.patch(`${PROJECT_API_PATH}/${id}`, payload);
   return res;
 }
+
+export const deleteProject = async (id: string): Promise<ProjectResponse> => {
+  const res = await axios.delete(`${PROJECT_API_PATH}/${id}`);
+  return res;
+}

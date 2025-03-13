@@ -1,5 +1,5 @@
-import { useParams } from "react-router";
-import { useProject, useUpdateProject } from "./hooks/useProject";
+import { useNavigate, useParams } from "react-router";
+import { useDeleteProject, useProject, useUpdateProject } from "./hooks/useProject";
 import { useEffect, useState } from "react";
 import { Project } from "./types/Project";
 
@@ -35,6 +35,13 @@ export default function ProjectShow() {
     updateMutation.mutate({ id: String(id), data: newProject });
   }
 
+  // handle delete
+  const deleteMutation = useDeleteProject();
+  const navigate = useNavigate();
+  const handleDelete = (id: number) => {
+    deleteMutation.mutate(String(id));
+  };
+
   if (isLoading) return <p className="text-lg">Fetching project information...</p>
   if (error) {
     return (
@@ -64,6 +71,10 @@ export default function ProjectShow() {
                 saveEdits(param.project_id);
               }}>Save</button>
             }
+            {/* !toggleEdit ? <button onClick={() => {
+              handleDelete(Number(param.project_id));
+              navigate("/projects");
+            }}>Delete</button> : <></> */}   
           </div>
         </div>
 
