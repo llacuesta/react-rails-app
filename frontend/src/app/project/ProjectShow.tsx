@@ -70,12 +70,25 @@ export default function ProjectShow() {
         <div className="flex flex-col gap-2 w-full items-start">
           <div className="inline-flex gap-2">
             <p className="w-[150px] text-left">Project duration:</p>
-            <p>{newDuration}</p>
+            {
+              !toggleEdit ?
+              <p>{newDuration}</p> :
+              <input type="text" value={newDuration} onChange={e => {
+                setNewDuration(Number(e.target.value))
+              }}></input>
+            }
+            
             <p>hours</p>
           </div>
           <div className="inline-flex gap-2">
             <p className="w-[150px] text-left">Date started:</p>
-            <p>{new Date(newStartDate).toDateString()}</p>
+            {
+              !toggleEdit ?
+              <p>{new Date(newStartDate).toDateString()}</p> :
+              <input type="text" value={new Date(newStartDate).toDateString()} onChange={e => {
+                setNewStartDate(new Date(e.target.value))
+              }}></input>
+            }
           </div>
         </div>
     </div>
