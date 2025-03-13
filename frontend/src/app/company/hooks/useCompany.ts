@@ -28,7 +28,7 @@ export const useCreateCompany = () => {
 }
 
 export const useUpdateCompany = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: { id: string, data: Company }) => updateCompany(payload.id, payload.data),

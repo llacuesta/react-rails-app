@@ -19,3 +19,8 @@ export const createNewProject = async (payload: Project): Promise<ProjectRespons
   const res = await axios.post(PROJECT_API_PATH, payload);
   return res;
 }
+
+export const updateProject = async (id: string, payload: Project): Promise<ProjectResponse> => {
+  const res = await axios.patch(`${PROJECT_API_PATH}/${id}`, payload);
+  return res;
+}

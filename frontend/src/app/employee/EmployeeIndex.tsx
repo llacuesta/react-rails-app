@@ -44,7 +44,7 @@ export default function EmployeeIndex() {
       last_name: newLname,
       company_id
     }
-    updateMutation.mutate({ user_id: String(id), data: newEmployee })
+    updateMutation.mutate({ user_id: String(id), data: newEmployee });
   }
 
   // handle delete
