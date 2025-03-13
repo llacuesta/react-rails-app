@@ -1,6 +1,6 @@
 class Company < ApplicationRecord
-  has_many :employees
-  has_many :projects
+  has_many :employees, dependent: :nullify
+  has_many :projects, dependent: :nullify
 
   # validation
   validates :company_name, presence: true
