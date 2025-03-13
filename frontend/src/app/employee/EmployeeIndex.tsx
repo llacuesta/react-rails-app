@@ -50,7 +50,7 @@ export default function EmployeeIndex() {
   // handle delete
   const deleteMutation = useDeleteEmployee();
   const handleDelete = (id: number) => {
-    deleteMutation.mutate(String(id))
+    deleteMutation.mutate(String(id));
   };
 
   if (isLoading) return <p className="text-lg">Fetching employees...</p>

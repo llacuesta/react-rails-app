@@ -24,3 +24,8 @@ export const updateCompany = async (id: string, payload: Company): Promise<Compa
   const res = await axios.patch(`${COMPANY_API_PATH}/${id}`, payload);
   return res;
 }
+
+export const deleteCompany = async (id: string): Promise<CompanyResponse> => {
+  const res = await axios.delete(`${COMPANY_API_PATH}/${id}`);
+  return res;
+}

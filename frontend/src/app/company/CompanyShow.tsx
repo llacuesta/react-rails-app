@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router";
-import { useCompany, useUpdateCompany } from "./hooks/useCompany";
+import { Link, useParams, useNavigate } from "react-router";
+import { useCompany, useDeleteCompany, useUpdateCompany } from "./hooks/useCompany";
 import { useEffect, useState } from "react";
 import { Company } from "./types/Company";
 
@@ -25,6 +25,13 @@ export default function CompanyShow() {
       }
       updateMutation.mutate({ id, data: newCompany })
     }
+
+    // handle delete
+    const deleteMutation = useDeleteCompany();
+    const navigate = useNavigate();
+    const handleDelete = (id: number) => {
+      deleteMutation.mutate(String(id));
+    };
 
     if (isLoading) return <p className="text-lg">Fetching company information...</p>
     if (error) {
@@ -55,6 +62,10 @@ export default function CompanyShow() {
                 saveEdits(param.company_id);
               }}>Save</button>
             }
+            { !toggleEdit ? <button onClick={() => {
+              handleDelete(Number(param.company_id));
+              navigate("/companies");
+            }}>Delete</button> : <></> }     
           </div>
         </div>
 
