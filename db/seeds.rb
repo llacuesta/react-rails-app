@@ -42,7 +42,8 @@ Employee.destroy_all
   Employee.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    company_id: 1
+    company_id: 1,
+    project_id: 1
   )
 end
 p "Created 10 employees"

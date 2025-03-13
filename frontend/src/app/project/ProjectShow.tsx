@@ -71,10 +71,10 @@ export default function ProjectShow() {
                 saveEdits(param.project_id);
               }}>Save</button>
             }
-            {/* !toggleEdit ? <button onClick={() => {
+            { !toggleEdit ? <button onClick={() => {
               handleDelete(Number(param.project_id));
               navigate("/projects");
-            }}>Delete</button> : <></> */}   
+            }}>Delete</button> : <></> }   
           </div>
         </div>
 
